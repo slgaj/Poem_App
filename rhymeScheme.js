@@ -1,5 +1,5 @@
 
-let defaultPath, author,title,rhymeID;
+let defaultPath, author,title,rhymeID,poemLen;
 author = document.getElementById("resultAuthor");
 title = document.getElementById("resultTitle");
 rhymeID = document.getElementById("rhymeID");
@@ -7,7 +7,7 @@ author.innerHTML = sessionStorage.getItem("aName");
 title.innerHTML = sessionStorage.getItem("title");
 
 let poemArray= JSON.parse(sessionStorage.getItem("poem"));
-
+poemLen = poemArray.length;
 // on click of reload button of browser or back button , it should navigate to main page 
 if (window.performance.getEntriesByType("navigation")[0].type=='reload'){
    loadHome();
@@ -29,21 +29,24 @@ window.onload = (event) => {
 
 // AA BB rhyme logic starts
 function  checkRhyme() {
-    for (let i=0;i<poemArray.length;) {
+    for (let i=0;i<poemLen;) {
         let ctr1=0, ctr2=0;
-        let firstSetLineOne = poemArray[i].split(" ").pop();        
-        let firstSetLineTwo = poemArray[i+1].split(" ").pop();       
-        let SecondSetLineOne = poemArray[i+2].split(" ").pop();       
-        let SecondSetLineTwo = poemArray[i+3].split(" ").pop();
-        
-        ctr1=twoLines(firstSetLineOne,firstSetLineTwo);
-        ctr2=twoLines(SecondSetLineOne,SecondSetLineTwo);
+		if( i+1<poemLen && i+2<poemLen && i+3<poemLen ){
+			let firstSetLineOne = poemArray[i].split(" ").pop();        
+			let firstSetLineTwo = poemArray[i+1].split(" ").pop();       
+			let SecondSetLineOne = poemArray[i+2].split(" ").pop();       
+			let SecondSetLineTwo = poemArray[i+3].split(" ").pop();
+			
+			ctr1=twoLines(firstSetLineOne,firstSetLineTwo);
+			ctr2=twoLines(SecondSetLineOne,SecondSetLineTwo);
 
-        if(ctr1>=2 && ctr2>=2){
-            rhymeID.innerHTML = "AA BB";
-            break;
-        }           
-        i=i+4;
+			if(ctr1>=2 && ctr2>=2){
+				rhymeID.innerHTML = "AA BB";
+				break;
+			}           
+        
+		}
+		i=i+4;
     }
     rhymeID.classList.remove("hide");    
 }
