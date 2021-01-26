@@ -76,4 +76,3 @@ for(let i=0;i<poemArray.length;i++){
     li.appendChild(document.createTextNode(poemArray[i]));
     startindex.appendChild(li);
 }
-module.exports = { twoLines, loopAndPop }
